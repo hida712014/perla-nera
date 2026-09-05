@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>document.documentElement.classList.add('js')</script>
 <title>Perla Nera — Fine Dining Roma</title>
 <meta name="description" content="Perla Nera, ristorante fine dining nel cuore di Roma: cucina di mare e tradizione italiana, 3 stelle Michelin, dal 1986.">
 <meta property="og:title" content="Perla Nera — Fine Dining Roma">
@@ -28,11 +27,15 @@ body{font-family:'Inter',sans-serif;background:var(--black);color:var(--cream);o
 ::-webkit-scrollbar-track{background:var(--dark)}
 ::-webkit-scrollbar-thumb{background:var(--gold)}
 
-/* CURSOR */
+/* CURSOR (solo su dispositivi con mouse vero: su touch resta il cursore/tocco nativo) */
 .cur{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s}
 .cur-f{width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s,border-color .3s}
 .cur.h{width:14px;height:14px;background:var(--gold-l)}
 .cur-f.h{width:56px;height:56px;border-color:var(--gold);opacity:.6}
+@media (hover:none){
+  .cur,.cur-f{display:none}
+  body{cursor:auto}
+}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:28px 60px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
@@ -94,11 +97,14 @@ nav.scrolled{background:rgba(10,10,10,.96);backdrop-filter:blur(20px);padding:16
 .sec-title{font-family:'Playfair Display',serif;font-size:clamp(34px,4vw,58px);font-weight:400;line-height:1.15}
 .sec-title em{font-style:italic;color:var(--gold-l)}
 
-/* REVEAL (di base tutto visibile: l'animazione si attiva solo se il JS è confermato attivo, così il contenuto non sparisce nei visualizzatori che non eseguono script, es. anteprima WhatsApp) */
+/* REVEAL — di base SEMPRE visibile. Diventa invisibile solo se il JS stesso applica .pre
+   (stessa riga di codice che poi lo osserva per farlo riapparire): se lo script non parte,
+   o si ferma prima per un motivo qualsiasi in un browser/webview limitato, il contenuto
+   resta semplicemente visibile invece di sparire per sempre. */
 .rv,.rv-l,.rv-r{opacity:1;transform:none;transition:opacity .8s ease,transform .8s ease}
-html.js .rv{opacity:0;transform:translateY(40px)}
-html.js .rv-l{opacity:0;transform:translateX(-50px)}
-html.js .rv-r{opacity:0;transform:translateX(50px)}
+.rv.pre{opacity:0;transform:translateY(40px)}
+.rv-l.pre{opacity:0;transform:translateX(-50px)}
+.rv-r.pre{opacity:0;transform:translateX(50px)}
 .rv.in,.rv-l.in,.rv-r.in{opacity:1;transform:none}
 
 /* ABOUT */
@@ -593,18 +599,25 @@ const burger=document.getElementById('burger'),mob=document.getElementById('mobM
 burger.addEventListener('click',()=>{burger.classList.toggle('on');mob.classList.toggle('on')});
 document.querySelectorAll('.mob-l').forEach(l=>l.addEventListener('click',()=>{burger.classList.remove('on');mob.classList.remove('on')}));
 
-// REVEAL
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
-},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.rv,.rv-l,.rv-r').forEach((el,i)=>{
-  el.style.transitionDelay=`${(i%4)*.12}s`;
-  obs.observe(el);
-});
-// rete di sicurezza: se un elemento non viene mai intercettato (webview limitate), lo mostra comunque
-setTimeout(()=>{
-  document.querySelectorAll('.rv:not(.in),.rv-l:not(.in),.rv-r:not(.in)').forEach(el=>el.classList.add('in'));
-},2500);
+// REVEAL (avvolto in try/catch: se IntersectionObserver non è supportato in qualche
+// webview datata, l'errore non deve bloccare il resto dello script — tab del menu,
+// smooth scroll, form — e il contenuto resta comunque visibile di default)
+try{
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv,.rv-l,.rv-r').forEach((el,i)=>{
+    el.style.transitionDelay=`${(i%4)*.12}s`;
+    el.classList.add('pre');
+    obs.observe(el);
+  });
+  // rete di sicurezza: se un elemento non viene mai intercettato, lo mostra comunque
+  setTimeout(()=>{
+    document.querySelectorAll('.pre:not(.in)').forEach(el=>el.classList.add('in'));
+  },2500);
+}catch(e){
+  document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>el.classList.add('in'));
+}
 
 // PARALLAX HERO
 const heroBg=document.getElementById('heroBg');
