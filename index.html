@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js')</script>
+<title>Perla Nera — Fine Dining Roma</title>
+<meta name="description" content="Perla Nera, ristorante fine dining nel cuore di Roma: cucina di mare e tradizione italiana, 3 stelle Michelin, dal 1986.">
+<meta property="og:title" content="Perla Nera — Fine Dining Roma">
+<meta property="og:description" content="Dove il mare incontra l'eccellenza. Alta cucina a Roma dal 1986.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a84c;--gold-l:#e2c97e;--gold-d:#a07830;
+  --black:#0a0a0a;--dark:#111111;--dark2:#1a1a1a;
+  --cream:#f8f5ef;--white:#ffffff;--gray:#888;--gray-l:#bbb;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--cream);overflow-x:hidden;cursor:none}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* CURSOR */
+.cur{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s}
+.cur-f{width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s,border-color .3s}
+.cur.h{width:14px;height:14px;background:var(--gold-l)}
+.cur-f.h{width:56px;height:56px;border-color:var(--gold);opacity:.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:28px 60px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
+nav.scrolled{background:rgba(10,10,10,.96);backdrop-filter:blur(20px);padding:16px 60px;border-bottom:1px solid rgba(201,168,76,.12)}
+.logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--white);text-decoration:none;letter-spacing:3px;text-transform:uppercase}
+.logo span{background:linear-gradient(120deg,var(--gold-d) 0%,var(--gold-l) 45%,#fdfaf3 52%,var(--gold-l) 60%,var(--gold-d) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-size:10px;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;letter-spacing:2.5px;text-transform:uppercase;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{border:1px solid var(--gold)!important;color:var(--gold)!important;padding:10px 22px}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--black)!important}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+.burger span{display:block;width:26px;height:1px;background:var(--white);transition:all .4s var(--ease)}
+.burger.on span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mob-menu{position:fixed;inset:0;background:var(--black);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;opacity:0;pointer-events:none;transition:opacity .4s}
+.mob-menu.on{opacity:1;pointer-events:all}
+.mob-menu a{font-family:'Playfair Display',serif;font-size:40px;color:var(--white);text-decoration:none;transition:color .3s}
+.mob-menu a:hover{color:var(--gold)}
+
+/* HERO */
+.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover;transform:scale(1.08)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.25) 0%,rgba(10,10,10,.55) 50%,rgba(10,10,10,.88) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 20px}
+.h-eye{font-size:10px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;transform:translateY(20px);animation:fadeUp 1s ease .3s forwards}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(60px,9vw,128px);font-weight:400;line-height:.95;color:var(--white);opacity:0;transform:translateY(30px);animation:fadeUp 1s ease .5s forwards}
+.h-title em{font-style:italic;color:var(--gold-l);display:block;text-shadow:0 0 60px rgba(226,201,126,.4)}
+.h-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2vw,26px);font-weight:300;font-style:italic;color:rgba(255,255,255,.7);margin:24px 0 50px;opacity:0;transform:translateY(20px);animation:fadeUp 1s ease .7s forwards}
+.h-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(20px);animation:fadeUp 1s ease .9s forwards}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s ease 1.6s forwards}
+.hero-scroll span{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sLine 2s ease infinite}
+
+/* BUTTONS */
+.btn{display:inline-block;text-decoration:none;cursor:none;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.btn-g{background:var(--gold);color:var(--black);padding:15px 38px;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase}
+.btn-g::before{content:'';position:absolute;inset:0;background:var(--gold-l);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.btn-g span{position:relative;z-index:1}
+.btn-g:hover::before{transform:scaleX(1)}
+.btn-o{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.35);padding:15px 38px;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase}
+.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;background:var(--gold);padding:16px 0}
+.marquee-inner{display:flex;gap:60px;animation:marquee 28s linear infinite;white-space:nowrap}
+.m-item{display:flex;align-items:center;gap:60px;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--black);flex-shrink:0}
+.m-dot{width:5px;height:5px;background:var(--black);border-radius:50%;flex-shrink:0}
+
+/* SECTION COMMONS */
+.eye{font-size:10px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.eye::before{content:'';width:36px;height:1px;background:var(--gold)}
+.eye.center{justify-content:center}
+.eye.center::before{display:none}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(34px,4vw,58px);font-weight:400;line-height:1.15}
+.sec-title em{font-style:italic;color:var(--gold-l)}
+
+/* REVEAL (di base tutto visibile: l'animazione si attiva solo se il JS è confermato attivo, così il contenuto non sparisce nei visualizzatori che non eseguono script, es. anteprima WhatsApp) */
+.rv,.rv-l,.rv-r{opacity:1;transform:none;transition:opacity .8s ease,transform .8s ease}
+html.js .rv{opacity:0;transform:translateY(40px)}
+html.js .rv-l{opacity:0;transform:translateX(-50px)}
+html.js .rv-r{opacity:0;transform:translateX(50px)}
+.rv.in,.rv-l.in,.rv-r.in{opacity:1;transform:none}
+
+/* ABOUT */
+.about{padding:140px 60px;background:var(--dark)}
+.about-in{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.about-imgs{position:relative;height:580px}
+.a-img1{position:absolute;top:0;left:0;width:73%;height:78%;object-fit:cover;z-index:2}
+.a-img2{position:absolute;bottom:0;right:0;width:54%;height:54%;object-fit:cover;z-index:3;border:6px solid var(--dark)}
+.a-badge{position:absolute;top:50%;left:58%;transform:translate(-50%,-50%);z-index:4;width:116px;height:116px;background:radial-gradient(circle at 35% 28%,#fdfaf3 0%,#e2c97e 38%,#c9a84c 68%,#a07830 100%);box-shadow:0 0 44px rgba(226,201,126,.4),0 8px 26px rgba(0,0,0,.45);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.a-badge .yr{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--black);line-height:1}
+.a-badge .lb{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--black);margin-top:4px}
+.about-body{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:300;line-height:1.75;color:rgba(248,245,239,.75);margin:28px 0 36px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;padding-top:40px;border-top:1px solid rgba(201,168,76,.18)}
+.st-n{font-family:'Playfair Display',serif;font-size:42px;font-weight:400;color:var(--gold);line-height:1}
+.st-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:6px}
+
+/* DISHES */
+.dishes{padding:140px 60px;background:var(--black)}
+.dishes-hd{max-width:1380px;margin:0 auto 70px;display:flex;justify-content:space-between;align-items:flex-end}
+.dishes-grid{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.dish-c{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:none}
+.dish-c:first-child{grid-row:span 2;aspect-ratio:auto}
+.dish-img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.dish-c:hover .dish-img{transform:scale(1.08)}
+.dish-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.15) 65%,transparent 100%);transition:all .4s}
+.dish-c:hover .dish-ov{background:linear-gradient(to top,rgba(0,0,0,.97) 0%,rgba(0,0,0,.35) 65%,rgba(0,0,0,.05) 100%)}
+.dish-info{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(16px);transition:transform .4s var(--ease)}
+.dish-c:hover .dish-info{transform:none}
+.dish-cat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.dish-name{font-family:'Playfair Display',serif;font-size:21px;font-weight:500;color:var(--white);margin-bottom:8px}
+.dish-desc{font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(255,255,255,.6);opacity:0;transform:translateY(10px);transition:opacity .4s .1s,transform .4s .1s}
+.dish-c:hover .dish-desc{opacity:1;transform:none}
+.dish-price{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold);margin-top:12px}
+
+/* EXPERIENCE */
+.exp-sec{padding:140px 60px;background:var(--dark)}
+.exp-in{max-width:1380px;margin:0 auto}
+.exp-hd{text-align:center;margin-bottom:76px}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.12)}
+.exp-card{background:var(--dark);padding:56px 46px;position:relative;overflow:hidden;transition:background .4s}
+.exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.exp-card:hover::before{transform:scaleX(1)}
+.exp-card:hover{background:rgba(201,168,76,.04)}
+.exp-num{font-family:'Playfair Display',serif;font-size:76px;font-weight:400;color:rgba(201,168,76,.08);line-height:1;margin-bottom:-18px}
+.exp-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:var(--white);margin-bottom:18px}
+.exp-txt{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:rgba(248,245,239,.6);line-height:1.7}
+
+/* CHEF */
+.chef{background:var(--black);overflow:hidden}
+.chef-in{display:grid;grid-template-columns:1fr 1fr;min-height:80vh}
+.chef-img{position:relative;overflow:hidden}
+.chef-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease}
+.chef-img:hover img{transform:scale(1.05)}
+.chef-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--black) 100%)}
+.chef-cont{display:flex;flex-direction:column;justify-content:center;padding:90px 70px}
+.chef-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.2vw,32px);font-weight:300;font-style:italic;line-height:1.55;color:var(--cream);margin:28px 0;padding-left:28px;border-left:1px solid var(--gold)}
+.chef-name{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:var(--white);margin-top:28px}
+.chef-role{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-top:5px}
+.chef-awards{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap}
+.award{display:flex;align-items:center;gap:11px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);padding:13px 18px}
+.award-ico{font-size:20px}
+.award-txt{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-l);line-height:1.5}
+
+/* GALLERY */
+.gallery{padding:130px 0;background:var(--dark2);overflow:hidden}
+.gallery-hd{text-align:center;padding:0 60px;margin-bottom:70px}
+.g-track{display:flex;gap:18px;animation:gScroll 32s linear infinite}
+.g-track:hover{animation-play-state:paused}
+.g-item{flex-shrink:0;width:360px;height:250px;overflow:hidden;cursor:none}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.g-item:hover img{transform:scale(1.1)}
+
+/* MENU */
+.menu-sec{padding:140px 60px;background:var(--black)}
+.menu-in{max-width:1380px;margin:0 auto}
+.menu-hd{text-align:center;margin-bottom:70px}
+.menu-tabs{display:flex;justify-content:center;border-bottom:1px solid rgba(201,168,76,.18);margin-bottom:56px}
+.tab{background:none;border:none;padding:15px 36px;font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray);cursor:none;position:relative;transition:color .3s}
+.tab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+.tab.on{color:var(--gold)}
+.tab.on::after{transform:scaleX(1)}
+.tab-content{display:none}
+.tab-content.on{display:block}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.mi{padding:28px 0;border-bottom:1px solid rgba(201,168,76,.08);display:flex;justify-content:space-between;align-items:flex-start;gap:36px;padding-right:56px}
+.mi:nth-child(even){padding-left:56px;padding-right:0;border-left:1px solid rgba(201,168,76,.08)}
+.mi-name{font-family:'Playfair Display',serif;font-size:19px;font-weight:500;color:var(--white);margin-bottom:7px}
+.mi-desc{font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(248,245,239,.5);line-height:1.5}
+.mi-price{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold);white-space:nowrap;margin-top:3px}
+.menu-ft{text-align:center;margin-top:56px}
+.menu-note{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--gray);margin-bottom:28px}
+
+/* RESERVATION */
+.res{padding:140px 60px;background:var(--dark);position:relative;overflow:hidden}
+.res::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80') center/cover;opacity:.06;background-attachment:fixed}
+.res-in{position:relative;z-index:2;max-width:860px;margin:0 auto;text-align:center}
+.res-sub{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;font-style:italic;color:rgba(248,245,239,.65);margin:18px 0 56px}
+.res-form{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.fg{position:relative}
+.fg.full{grid-column:span 2}
+.fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);color:var(--white);padding:18px 18px;font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .3s,background .3s;cursor:none;-webkit-appearance:none;appearance:none}
+.fg select option{background:var(--dark2)}
+.fg textarea{resize:none;height:115px}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);background:rgba(201,168,76,.04)}
+.fg label{position:absolute;top:18px;left:18px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);transition:all .3s;pointer-events:none}
+.fg input:focus+label,.fg input:not(:placeholder-shown)+label,
+.fg select:focus+label,.fg select:valid+label,
+.fg textarea:focus+label,.fg textarea:not(:placeholder-shown)+label{top:-10px;left:14px;font-size:8px;background:var(--dark);padding:0 6px;color:var(--gold)}
+.fg-sub{grid-column:span 2;margin-top:8px}
+.fg-sub .btn-g{width:100%;text-align:center;padding:19px;font-size:11px;letter-spacing:4px;border:none}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid rgba(201,168,76,.12)}
+.ft-top{padding:80px 60px 56px;max-width:1380px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.ft-brand p{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:rgba(248,245,239,.45);line-height:1.75;max-width:270px;margin-top:16px}
+.ft-socials{display:flex;gap:12px;margin-top:28px}
+.soc{width:38px;height:38px;border:1px solid rgba(201,168,76,.25);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:13px;transition:all .3s;cursor:none}
+.soc:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
+.ft-col h4{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.ft-col ul{list-style:none}
+.ft-col ul li{margin-bottom:12px}
+.ft-col ul li a,.ft-col p{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(248,245,239,.5);text-decoration:none;transition:color .3s;line-height:1.8;cursor:none}
+.ft-col ul li a:hover{color:var(--gold)}
+.ft-bot{border-top:1px solid rgba(201,168,76,.08);padding:22px 60px;max-width:1380px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.ft-bot p{font-size:10px;color:rgba(248,245,239,.25);letter-spacing:.5px}
+.ft-bot a{color:var(--gold);text-decoration:none}
+
+/* KEYFRAMES */
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes sLine{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:.2}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes gScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .about-in{grid-template-columns:1fr;gap:60px}
+  .about-imgs{height:480px}
+  .chef-in{grid-template-columns:1fr}
+  .chef-img{height:60vh}
+  .chef-img::after{background:linear-gradient(to top,var(--black) 0%,transparent 40%)}
+  .ft-top{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:860px){
+  nav{padding:22px 28px}
+  nav.scrolled{padding:14px 28px}
+  .nav-links{display:none}
+  .burger{display:flex}
+  .about,.dishes,.exp-sec,.menu-sec,.res,.gallery{padding:80px 28px}
+  .dishes-hd{flex-direction:column;align-items:flex-start;gap:20px}
+  .dishes-grid{grid-template-columns:1fr}
+  .dish-c:first-child{grid-row:auto}
+  .exp-grid{grid-template-columns:1fr}
+  .chef-cont{padding:56px 28px}
+  .menu-grid{grid-template-columns:1fr}
+  .mi:nth-child(even){padding-left:0;border-left:none}
+  .mi{padding-right:0}
+  .res-form{grid-template-columns:1fr}
+  .fg.full,.fg-sub{grid-column:span 1}
+  .ft-top{grid-template-columns:1fr;padding:56px 28px 40px}
+  .ft-bot{padding:18px 28px;flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-f" id="curf"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#home" class="logo">Perla<span>Nera</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Storia</a></li>
+    <li><a href="#dishes">Cucina</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#chef">Chef</a></li>
+    <li><a href="#res" class="nav-cta">Prenota</a></li>
+  </ul>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#about" class="mob-l">Storia</a>
+  <a href="#dishes" class="mob-l">Cucina</a>
+  <a href="#menu" class="mob-l">Menu</a>
+  <a href="#chef" class="mob-l">Chef</a>
+  <a href="#res" class="mob-l">Prenota</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <p class="h-eye">Roma &nbsp;·&nbsp; Fine Dining &nbsp;·&nbsp; Dal 1986</p>
+    <h1 class="h-title">Perla<em>Nera</em></h1>
+    <p class="h-sub">Dove il mare incontra l'eccellenza</p>
+    <div class="h-btns">
+      <a href="#menu" class="btn btn-g"><span>Scopri il Menu</span></a>
+      <a href="#res" class="btn btn-o">Prenota un Tavolo</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scorri</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <div class="m-item"><span>3 Stelle Michelin</span><div class="m-dot"></div><span>Miglior Ristorante d'Italia 2025</span><div class="m-dot"></div><span>Wine Spectator Grand Award</span><div class="m-dot"></div><span>World's 50 Best Restaurants</span><div class="m-dot"></div><span>Excellence in Gastronomy</span><div class="m-dot"></div></div>
+    <div class="m-item" aria-hidden="true"><span>3 Stelle Michelin</span><div class="m-dot"></div><span>Miglior Ristorante d'Italia 2025</span><div class="m-dot"></div><span>Wine Spectator Grand Award</span><div class="m-dot"></div><span>World's 50 Best Restaurants</span><div class="m-dot"></div><span>Excellence in Gastronomy</span><div class="m-dot"></div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-in">
+    <div class="about-imgs rv-l">
+      <img class="a-img1" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80" alt="Sala">
+      <img class="a-img2" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Piatto">
+      <div class="a-badge"><span class="yr">40</span><span class="lb">anni di<br>eccellenza</span></div>
+    </div>
+    <div class="rv-r">
+      <div class="eye">La Nostra Storia</div>
+      <h2 class="sec-title">Un viaggio nei sapori<br>dell'<em>Italia autentica</em></h2>
+      <p class="about-body">Fondata nel cuore di Roma nel 1986, Perla Nera è nata dalla passione di tre generazioni di cuochi che hanno trasformato ingredienti di mare e di terra in esperienze indimenticabili. Ogni piatto racconta una storia, ogni ingrediente è scelto con cura maniacale dai migliori produttori italiani.</p>
+      <a href="#chef" class="btn btn-g"><span>Conosci lo Chef</span></a>
+      <div class="stats">
+        <div><div class="st-n" data-count="3" data-suffix="★">3★</div><div class="st-l">Stelle Michelin</div></div>
+        <div><div class="st-n" data-count="47">47</div><div class="st-l">Produttori selezionati</div></div>
+        <div><div class="st-n" data-count="600" data-suffix="+">600+</div><div class="st-l">Etichette in cantina</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISHES -->
+<section class="dishes" id="dishes">
+  <div class="dishes-hd">
+    <div class="rv"><div class="eye">I Nostri Piatti</div><h2 class="sec-title">La nostra<br><em>cucina</em></h2></div>
+    <a href="#menu" class="btn btn-o rv">Menu Completo</a>
+  </div>
+  <div class="dishes-grid">
+    <div class="dish-c rv">
+      <img class="dish-img" src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=900&q=80" alt="Risotto al Tartufo">
+      <div class="dish-ov"></div>
+      <div class="dish-info">
+        <div class="dish-cat">Primo Piatto</div>
+        <div class="dish-name">Risotto al Tartufo Bianco</div>
+        <div class="dish-desc">Riso Carnaroli Riserva San Massimo, tartufo bianco d'Alba, Parmigiano 36 mesi, burro di malga</div>
+        <div class="dish-price">€ 95</div>
+      </div>
+    </div>
+    <div class="dish-c rv">
+      <img class="dish-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=80" alt="Agnello">
+      <div class="dish-ov"></div>
+      <div class="dish-info">
+        <div class="dish-cat">Secondo</div>
+        <div class="dish-name">Agnello della Marsica</div>
+        <div class="dish-desc">Costolette in crosta di erbe, jus al vino rosso, carciofi romani, salsa all'aglio nero</div>
+        <div class="dish-price">€ 78</div>
+      </div>
+    </div>
+    <div class="dish-c rv">
+      <img class="dish-img" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=700&q=80" alt="Dessert">
+      <div class="dish-ov"></div>
+      <div class="dish-info">
+        <div class="dish-cat">Dessert Signature</div>
+        <div class="dish-name">Perla Nera</div>
+        <div class="dish-desc">Sfera di fondente 75%, cuore ai lamponi, glassa a specchio nera, oro alimentare 24K</div>
+        <div class="dish-price">€ 34</div>
+      </div>
+    </div>
+    <div class="dish-c rv">
+      <img class="dish-img" src="https://images.unsplash.com/photo-1717815964125-cceaad966316?w=700&q=80" alt="Tagliolini all'Astice">
+      <div class="dish-ov"></div>
+      <div class="dish-info">
+        <div class="dish-cat">Pasta Fresca</div>
+        <div class="dish-name">Tagliolini all'Astice</div>
+        <div class="dish-desc">Pasta tirata a mano, astice bretone, pomodorini confit, bottarga di muggine</div>
+        <div class="dish-price">€ 68</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-sec">
+  <div class="exp-in">
+    <div class="exp-hd rv"><div class="eye center">L'Esperienza</div><h2 class="sec-title">Più di una cena,<br><em>un ricordo eterno</em></h2></div>
+    <div class="exp-grid">
+      <div class="exp-card rv"><div class="exp-num">01</div><h3 class="exp-title">La Cantina</h3><p class="exp-txt">Oltre 600 etichette selezionate dal nostro sommelier tra i migliori vignaioli italiani e internazionali. Verticali rare, champagne millesimati, naturali biodinamici.</p></div>
+      <div class="exp-card rv"><div class="exp-num">02</div><h3 class="exp-title">Chef's Table</h3><p class="exp-txt">Un tavolo esclusivo affacciato sulla cucina. Soli otto ospiti per sera, un percorso di degustazione inedito preparato dallo Chef Alessandro Rossi.</p></div>
+      <div class="exp-card rv"><div class="exp-num">03</div><h3 class="exp-title">Private Dining</h3><p class="exp-txt">Sale private per eventi aziendali, celebrazioni ed occasioni speciali. Menu su misura per ospiti fino a 40 persone, con sommelier dedicato.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHEF -->
+<section class="chef" id="chef">
+  <div class="chef-in">
+    <div class="chef-img rv-l">
+      <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&q=80" alt="Chef Alessandro Rossi">
+    </div>
+    <div class="chef-cont rv-r">
+      <div class="eye">Il Maestro</div>
+      <h2 class="sec-title">Alessandro<br><em>Rossi</em></h2>
+      <blockquote class="chef-quote">"Cucino come se ogni piatto fosse una perla da scoprire: rara, imperfetta, e per questo preziosa. La perfezione non è un punto d'arrivo — è il viaggio stesso."</blockquote>
+      <div class="chef-name">Alessandro Rossi</div>
+      <div class="chef-role">Executive Chef &amp; Patron</div>
+      <div class="chef-awards">
+        <div class="award"><span class="award-ico">⭐</span><span class="award-txt">3 Stelle<br>Michelin</span></div>
+        <div class="award"><span class="award-ico">🏆</span><span class="award-txt">Chef dell'Anno<br>Gambero Rosso</span></div>
+        <div class="award"><span class="award-ico">👨‍🍳</span><span class="award-txt">Forbes<br>Top 10 Chef</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="gallery-hd rv"><div class="eye center">Galleria</div><h2 class="sec-title">L'<em>atmosfera</em></h2></div>
+  <div style="overflow:hidden">
+    <div class="g-track">
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1481833761820-0509d3217039?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt=""></div>
+      <div class="g-item"><img src="https://images.unsplash.com/photo-1481833761820-0509d3217039?w=600&q=80" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-sec" id="menu">
+  <div class="menu-in">
+    <div class="menu-hd rv"><div class="eye center">Il Menu</div><h2 class="sec-title">Una sinfonia<br><em>di sapori</em></h2></div>
+    <div class="menu-tabs rv">
+      <button class="tab on" data-tab="anti">Antipasti</button>
+      <button class="tab" data-tab="prim">Primi</button>
+      <button class="tab" data-tab="sec">Secondi</button>
+      <button class="tab" data-tab="dol">Dolci</button>
+    </div>
+
+    <div class="tab-content on" id="anti">
+      <div class="menu-grid">
+        <div class="mi"><div><div class="mi-name">Tartare di Fassona</div><div class="mi-desc">Fassona piemontese, tuorlo marinato, salsa tonnata, capperi di Pantelleria, tartufo estivo</div></div><div class="mi-price">€ 42</div></div>
+        <div class="mi"><div><div class="mi-name">Burrata di Andria</div><div class="mi-desc">Burrata fresca, San Marzano confit, pesto, pistacchi di Bronte, olio EVO</div></div><div class="mi-price">€ 28</div></div>
+        <div class="mi"><div><div class="mi-name">Scampi in Acqua Pazza</div><div class="mi-desc">Scampi di Mazara, acqua di pomodoro, erbe aromatiche, crostini all'aglio, caviale oscietra</div></div><div class="mi-price">€ 65</div></div>
+        <div class="mi"><div><div class="mi-name">Carpaccio di Ombrina</div><div class="mi-desc">Ombrina marinata agli agrumi, finocchietto selvatico, arancia di Sicilia, bottarga</div></div><div class="mi-price">€ 38</div></div>
+        <div class="mi"><div><div class="mi-name">Foie Gras Torchon</div><div class="mi-desc">Foie gras d'anatra, composta di fichi, brioche ai cereali, miele di castagno, fleur de sel</div></div><div class="mi-price">€ 52</div></div>
+        <div class="mi"><div><div class="mi-name">Capesante al Burro Bruno</div><div class="mi-desc">Capesante bretoni, burro nocciola al timo, purè di cavolfiore, chips di pastinaca</div></div><div class="mi-price">€ 48</div></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="prim">
+      <div class="menu-grid">
+        <div class="mi"><div><div class="mi-name">Risotto al Tartufo Bianco</div><div class="mi-desc">Carnaroli Riserva San Massimo, tartufo bianco d'Alba, Parmigiano 36 mesi, burro di malga</div></div><div class="mi-price">€ 95</div></div>
+        <div class="mi"><div><div class="mi-name">Tagliolini all'Astice</div><div class="mi-desc">Pasta fresca all'uovo, astice bretone, pomodorini confit, bottarga, olio al basilico</div></div><div class="mi-price">€ 68</div></div>
+        <div class="mi"><div><div class="mi-name">Cacio e Pepe in Vescica</div><div class="mi-desc">Tonnarelli di Gragnano, Pecorino Romano DOP, Parmigiano Reggiano, pepe nero di Sarawak</div></div><div class="mi-price">€ 38</div></div>
+        <div class="mi"><div><div class="mi-name">Ravioli Ricotta e Ortiche</div><div class="mi-desc">Pasta fresca, ricotta di pecora, ortiche selvatiche, burro al tartufo nero, mandorle tostate</div></div><div class="mi-price">€ 46</div></div>
+        <div class="mi"><div><div class="mi-name">Zuppa di Fagioli e Gamberi</div><div class="mi-desc">Fagioli Borlotti di Lamon, gamberi rossi di Sicilia, olio al rosmarino, cipolla bruciata</div></div><div class="mi-price">€ 44</div></div>
+        <div class="mi"><div><div class="mi-name">Gnocchi al Ragù di Cinghiale</div><div class="mi-desc">Gnocchi fatti a mano, ragù di cinghiale della Maremma, Pecorino di Pienza</div></div><div class="mi-price">€ 42</div></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="sec">
+      <div class="menu-grid">
+        <div class="mi"><div><div class="mi-name">Branzino in Crosta di Sale</div><div class="mi-desc">Branzino selvaggio, sale marino integrale, erbe aromatiche, verdure di stagione, salsa verde</div></div><div class="mi-price">€ 72</div></div>
+        <div class="mi"><div><div class="mi-name">Costata di Chianina</div><div class="mi-desc">Fiorentina IGP, 40 giorni di frollatura, sale Maldon, olio EVO, patate al rosmarino</div></div><div class="mi-price">€ 90</div></div>
+        <div class="mi"><div><div class="mi-name">Agnello della Marsica</div><div class="mi-desc">Costolette in crosta di erbe, jus al Montepulciano, carciofi romani, aglio nero fermentato</div></div><div class="mi-price">€ 78</div></div>
+        <div class="mi"><div><div class="mi-name">Piccione alla Royale</div><div class="mi-desc">Piccione confit, petto rosato, lenticchie beluga, jus al Barolo, foie gras</div></div><div class="mi-price">€ 82</div></div>
+        <div class="mi"><div><div class="mi-name">Rombo Chiodato</div><div class="mi-desc">Rombo dell'Adriatico, burro al limone, asparagi di Bassano, salicornia, cipollotto</div></div><div class="mi-price">€ 76</div></div>
+        <div class="mi"><div><div class="mi-name">Petto d'Anatra Laccato</div><div class="mi-desc">Anatra di Challans, lacca al miele e soia, mais soffice, riduzione ai mirtilli, noci pecan</div></div><div class="mi-price">€ 68</div></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="dol">
+      <div class="menu-grid">
+        <div class="mi"><div><div class="mi-name">Perla Nera</div><div class="mi-desc">Sfera di fondente 75% Valrhona, cuore ai lamponi selvatici, glassa a specchio nera, oro alimentare 24K</div></div><div class="mi-price">€ 34</div></div>
+        <div class="mi"><div><div class="mi-name">Tiramisù della Tradizione</div><div class="mi-desc">Mascarpone di bufala, savoiardi artigianali, caffè Illy, zabaione al Marsala Vergine</div></div><div class="mi-price">€ 24</div></div>
+        <div class="mi"><div><div class="mi-name">Panna Cotta al Pistacchio</div><div class="mi-desc">Pistacchio di Bronte DOP, coulis di fragole selvatiche, meringa italiana, crumble</div></div><div class="mi-price">€ 22</div></div>
+        <div class="mi"><div><div class="mi-name">Soufflé al Grand Marnier</div><div class="mi-desc">Soufflé caldo all'arancia, crema inglese alla vaniglia, arancio candito</div></div><div class="mi-price">€ 28</div></div>
+        <div class="mi"><div><div class="mi-name">Selezione di Formaggi</div><div class="mi-desc">5 formaggi italiani di eccellenza, miele millefiori, noci, mostarda di frutta, pane ai cereali</div></div><div class="mi-price">€ 36</div></div>
+        <div class="mi"><div><div class="mi-name">Cannolo Siciliano Rivisitato</div><div class="mi-desc">Cialda croccante, ricotta di pecora, gocce di fondente, pistacchi, scorza candita</div></div><div class="mi-price">€ 20</div></div>
+      </div>
+    </div>
+
+    <div class="menu-ft rv">
+      <p class="menu-note">Tutti i nostri ingredienti sono selezionati direttamente dai produttori. Menu soggetto a variazioni stagionali.</p>
+      <a href="#res" class="btn btn-g"><span>Prenota il tuo Tavolo</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section class="res" id="res">
+  <div class="res-in">
+    <div class="eye center rv">Prenota</div>
+    <h2 class="sec-title rv">Riserva il tuo<br><em>momento</em></h2>
+    <p class="res-sub rv">Per gruppi o eventi speciali, contattateci al <strong style="color:var(--gold)">+39 06 1234 5678</strong></p>
+    <form class="res-form rv" onsubmit="handleForm(event)">
+      <div class="fg"><input type="text" id="fn" placeholder=" " required><label for="fn">Nome e Cognome</label></div>
+      <div class="fg"><input type="email" id="em" placeholder=" " required><label for="em">Email</label></div>
+      <div class="fg"><input type="tel" id="ph" placeholder=" "><label for="ph">Telefono</label></div>
+      <div class="fg">
+        <select id="gs" required>
+          <option value="" disabled selected></option>
+          <option>1 Ospite</option><option>2 Ospiti</option><option>3 Ospiti</option>
+          <option>4 Ospiti</option><option>5 Ospiti</option><option>6 Ospiti</option><option>7+ Ospiti</option>
+        </select>
+        <label for="gs">Numero Ospiti</label>
+      </div>
+      <div class="fg"><input type="date" id="dt" placeholder=" " required><label for="dt">Data</label></div>
+      <div class="fg">
+        <select id="tm" required>
+          <option value="" disabled selected></option>
+          <option>12:30</option><option>13:00</option><option>13:30</option>
+          <option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option>
+        </select>
+        <label for="tm">Orario</label>
+      </div>
+      <div class="fg full"><textarea id="nt" placeholder=" "></textarea><label for="nt">Richieste Speciali</label></div>
+      <div class="fg-sub"><button type="submit" class="btn btn-g" style="border:none;width:100%;cursor:none"><span>Conferma Prenotazione</span></button></div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand">
+      <a href="#home" class="logo">Perla<span>Nera</span></a>
+      <p>Un'esperienza gastronomica senza tempo nel cuore di Roma, dove il mare e la tradizione italiana incontrano l'alta cucina contemporanea.</p>
+      <div class="ft-socials">
+        <a href="#" class="soc" aria-label="Instagram">✦</a>
+        <a href="#" class="soc" aria-label="Facebook">◈</a>
+        <a href="#" class="soc" aria-label="TripAdvisor">◉</a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <h4>Navigazione</h4>
+      <ul>
+        <li><a href="#about">La Nostra Storia</a></li>
+        <li><a href="#dishes">La Cucina</a></li>
+        <li><a href="#menu">Il Menu</a></li>
+        <li><a href="#chef">Lo Chef</a></li>
+        <li><a href="#res">Prenotazioni</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Orari</h4>
+      <p>Lunedì — Chiuso<br>Mar — Ven<br>12:30 – 14:30<br>20:00 – 23:00<br><br>Sab — Dom<br>12:30 – 23:00</p>
+    </div>
+    <div class="ft-col">
+      <h4>Contatti</h4>
+      <p>Vicolo delle Perle, 12<br>00186 Roma, Italia<br><br>+39 06 1234 5678<br>info@perlanera.it<br><br><span style="color:var(--gold);font-size:13px">Dress code: Smart Elegant</span></p>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <p>© 2026 Perla Nera. Tutti i diritti riservati.</p>
+    <p>Sito dimostrativo &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Cookie</a></p>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),curf=document.getElementById('curf');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function anim(){fx+=(mx-fx)*.12;fy+=(my-fy)*.12;curf.style.left=fx+'px';curf.style.top=fy+'px';requestAnimationFrame(anim)})();
+document.querySelectorAll('a,button,.dish-c,.g-item,.exp-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('h');curf.classList.add('h')});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('h');curf.classList.remove('h')});
+});
+
+// NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80));
+
+// BURGER
+const burger=document.getElementById('burger'),mob=document.getElementById('mobMenu');
+burger.addEventListener('click',()=>{burger.classList.toggle('on');mob.classList.toggle('on')});
+document.querySelectorAll('.mob-l').forEach(l=>l.addEventListener('click',()=>{burger.classList.remove('on');mob.classList.remove('on')}));
+
+// REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach((el,i)=>{
+  el.style.transitionDelay=`${(i%4)*.12}s`;
+  obs.observe(el);
+});
+// rete di sicurezza: se un elemento non viene mai intercettato (webview limitate), lo mostra comunque
+setTimeout(()=>{
+  document.querySelectorAll('.rv:not(.in),.rv-l:not(.in),.rv-r:not(.in)').forEach(el=>el.classList.add('in'));
+},2500);
+
+// PARALLAX HERO
+const heroBg=document.getElementById('heroBg');
+window.addEventListener('scroll',()=>{
+  if(scrollY<innerHeight)heroBg.style.transform=`translateY(${scrollY*.38}px) scale(1.08)`;
+});
+
+// MENU TABS
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById(t.dataset.tab).classList.add('on');
+  });
+});
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){
+  const href=this.getAttribute('href');
+  if(href.length<2)return;
+  e.preventDefault();
+  const t=document.querySelector(href);
+  if(t)t.scrollIntoView({behavior:'smooth'});
+}));
+
+// FORM
+function handleForm(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('button');
+  btn.innerHTML='<span>✓ Prenotazione Inviata!</span>';
+  btn.style.background='#2d6a4f';
+  setTimeout(()=>{btn.innerHTML='<span>Conferma Prenotazione</span>';btn.style.background='';e.target.reset()},3500);
+}
+
+// COUNTER
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.querySelectorAll('.st-n').forEach(el=>{
+      const n=+el.dataset.count,s=el.dataset.suffix||'';
+      let c=0;const step=n/55;
+      const t=setInterval(()=>{c+=step;if(c>=n){c=n;clearInterval(t)}
+        el.textContent=Math.floor(c)+s},16);
+    });
+    cObs.unobserve(e.target);
+  });
+},{threshold:.5});
+const stats=document.querySelector('.stats');
+if(stats)cObs.observe(stats);
+</script>
+</body>
+</html>
